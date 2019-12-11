@@ -42,11 +42,41 @@ class HTMLGenerator
             return '<p class="lead ml-5">The username ' . $username . ' has already been taken.</p>';
         }
 
-        if ($contentType == 'returnButton') {
+        if ($contentType == 'messageLoginError') {
+            return '<div class="card">
+            <div class="card-body">
+                <h2 class="card-title bg-danger text-white text-center">Error logging in (Invalid credentials)</h2>
+            </div>
+        </div>';
+        }
+
+        if ($contentType == 'messageLoginSuccess') {
+            return '<div class="card">
+            <div class="card-body">
+                <h2 class="card-title bg-success text-white text-center">You were successfully logged in! Welcome to Weber Movie Rental, ' . $username .'!</h2>
+            </div>
+        </div>';
+        }
+
+        if ($contentType == 'returnToLoginButton') {
             return '<form action="index.html">
-				<button class="btn btn-primary ml-5" type="submit">Return to Login</button>
+				<button class="btn btn-link d-inline pl-5" type="submit">Return to Login</button>
 			</form>';
         }
+
+        if ($contentType == 'logoutButton') {
+            return '<form action="logout.php">
+				<button class="btn btn-link d-inline pl-5" type="submit">Logout</button>
+			</form>';
+        }
+
+        if ($contentType == 'returnToCreateAccountButton') {
+            return '<form action="createAccount.html">
+				<button class="btn btn-link d-inline pl-5" type="submit">Return to Create Account</button>
+			</form>';
+        }
+
+        return '';
     }
 
     function generateFooter() {

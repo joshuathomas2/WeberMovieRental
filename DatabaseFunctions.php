@@ -38,12 +38,29 @@ class DatabaseFunctions {
         $statement->bindParam(':username', $username);
         $statement->bindParam(':email', $email);
         $statement->bindParam(':password_hash', $password_hash);
-        $statement->setFetchMode(PDO::FETCH_ASSOC);
         $statement->execute();
     }
 
     function verifyLogin($username, $password) {
+        try {
+            $dbh = new PDO("mysql:host=icarus.cs.weber.edu;dbname=W01236296", 'W01236296','Joshuacs!');
+            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo 'CONNECTION FAILURE: ' . $e->getMessage();
+            die();
+        }
 
+        $statement = $dbh->prepare('SELECT `Password_Hash` FROM `WMR_User` WHERE `Username` LIKE :username');
+        $statement->bindParam(':username', $username);
+        $statement->setFetchMode(PDO::FETCH_ASSOC);
+        $statement->execute();
+        $password_hash = $statement->fetchAll();
+
+        if (sizeof($password_hash) > 0) {
+            return password_verify($password, $password_hash[0]['Password_Hash']);
+        } else {
+            return false;
+        }
     }
 }
 
