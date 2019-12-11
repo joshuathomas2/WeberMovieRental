@@ -18,12 +18,19 @@ class HTMLGenerator
                 </head>
                 
                 <body>
-                <div class="jumbotron jumbotron-fluid" id="header" style="cursor: pointer">
-                    <div class="ml-5">
-                        <h1 class="display-4">Weber Movie Rental</h1>
-                        <p class="lead">Movie rental system for Weber State University students and faculty</p>
+                <div class="jumbotron jumbotron-fluid h-50" id="header" style="cursor: pointer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-9">
+                        <h1 class="display-4 px-5">Weber Movie Rental</h1>
+                        <p class="lead px-5">Movie rental system for Weber State University students and faculty</p>
                     </div>
-                </div>';
+                    <div class="col-3">
+                        <img src="img/logo.png" class="img-fluid d-inline-block" alt="Weber State University Logo">
+                    </div>
+                </div>
+            </div>
+        </div>';
     }
 
     function generateInnerContent($contentType, $username = '') {
