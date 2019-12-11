@@ -16,9 +16,14 @@ if (isset($_POST['username'], $_POST['password'])) {
 if (isset($_SESSION['username'], $_SESSION['password'])) {
     if ($DF->verifyLogin($_SESSION['username'], $_SESSION['password'])) {
         echo $GEN->generateHeader();
-        echo $GEN->generateInnerContent('messageLoginSuccess', $_SESSION['username']);
         echo $GEN->generateInnerContent('logoutButton');
-        // movie stuff
+        echo $GEN->generateInnerContent('messageLoginSuccess', $_SESSION['username']);
+
+
+        echo $GEN->generateInnerContent('messageYourMovies');
+        echo $GEN->generateInnerContent('listUserMovies');
+
+        echo $GEN->generateInnerContent('messageMovieSelection');
         echo $GEN->generateInnerContent('listAllMovies');
 
 

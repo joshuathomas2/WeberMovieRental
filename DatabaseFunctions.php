@@ -80,6 +80,23 @@ class DatabaseFunctions {
 
     }
 
+    function getMovieByID($movieID) {
+        try {
+            $dbh = new PDO("mysql:host=icarus.cs.weber.edu;dbname=W01236296", 'W01236296','Joshuacs!');
+            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo 'CONNECTION FAILURE: ' . $e->getMessage();
+            die();
+        }
+
+        $statement = $dbh->prepare('SELECT * FROM `WMR_Movie` WHERE `ID` = :ID');
+        $statement->bindParam(':ID', $movieID);
+        $statement->setFetchMode(PDO::FETCH_ASSOC);
+        $statement->execute();
+        $movie = $statement->fetchAll();
+        return $movie;
+    }
+
 
 
 

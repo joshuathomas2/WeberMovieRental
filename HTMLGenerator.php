@@ -58,6 +58,30 @@ class HTMLGenerator
         </div>';
         }
 
+        if ($contentType == 'messageLogoutSuccess') {
+            return '<div class="card">
+            <div class="card-body">
+                <h2 class="card-title bg-success text-white text-center">You were successfully logged out.</h2>
+            </div>
+        </div>';
+        }
+
+        if ($contentType == 'messageMovieSelection') {
+            return '<div class="card mt-5">
+            <div class="card-body">
+                <h2 class="card-title bg-primary text-white text-center">Movie Selection</h2>
+            </div>
+        </div>';
+        }
+
+        if ($contentType == 'messageYourMovies') {
+            return '<div class="card">
+            <div class="card-body">
+                <h2 class="card-title bg-primary text-white text-center">Your Rented Movies</h2>
+            </div>
+        </div>';
+        }
+
         if ($contentType == 'returnToLoginButton') {
             return '<form action="index.html">
 				<button class="btn btn-link d-inline pl-5" type="submit">Return to Login</button>
@@ -66,7 +90,7 @@ class HTMLGenerator
 
         if ($contentType == 'logoutButton') {
             return '<form action="logout.php">
-				<button class="btn btn-link d-inline pl-5" type="submit">Logout</button>
+				<button class="btn btn-link d-inline pl-5 mx-5" type="submit">Logout</button>
 			</form>';
         }
 
@@ -80,6 +104,12 @@ class HTMLGenerator
             return '<form action="login.php">
 				<button class="btn btn-link d-inline pl-5" type="submit">Return to Movies</button>
 			</form>';
+        }
+
+        if ($contentType == 'confirmRentalButton') {
+            return '<div class="form-group">
+                     <button type="submit" class="btn btn-primary">Confirm Rental</button>
+                </div>';
         }
 
         if ($contentType == 'listAllMovies') {
@@ -106,13 +136,12 @@ class HTMLGenerator
                 $movie_id = $movies[$i]['ID'];
                 if ($movies[$i]['Is_Rented'] == 0) {
                     $rentedButton = '<form class="ml-5" action="rent.php" method="post">
-                        <div class="form-group">
-        
-                            <input class="form-control w-25" type="hidden" id="movieID" name="movieID" value=' . $movie_id . '>
-                        </div>
-                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary">Rent This Movie</button>
-                                        </div>
+                    <div class="form-group">
+                    <input class="form-control w-25" type="hidden" id="movieID" name="movieID" value=' . $movie_id . '>
+                    </div>
+                    <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Rent This Movie</button>
+                    </div>
                     </form>';
                 } else {
                     $rentedButton = '
@@ -137,6 +166,23 @@ class HTMLGenerator
         }
 
         if ($contentType == 'listUserMovies') {
+            $tableTop = "<table class='table'>
+                                <thead>
+                                    <tr>
+                                        <th class='scope-col'>ID</th>
+                                        <th class='scope-col'>Movie Title</th>
+                                        <th class='scope-col'>Year</th>
+                                    </tr>
+                                </thead>
+                                <tbody>";
+
+            $tableInner = "";
+            $tableBottom = "</tbody></table>";
+
+            return $tableTop . $tableInner . $tableBottom;
+        }
+
+        if ($contentType == 'listSelectedMovie') {
 
         }
 
@@ -153,5 +199,27 @@ class HTMLGenerator
     function generateFooter() {
         return '	</body>
                 </html>';
+    }
+
+    function generateSelectedMovieList($movieID) {
+        $DF = new DatabaseFunctions();
+        $movie = $DF->getMovieByID($movieID);
+        $tableTop = "<table class='table'>
+                                <thead>
+                                    <tr>
+                                        <th class='scope-col'>ID</th>
+                                        <th class='scope-col'>Movie Title</th>
+                                        <th class='scope-col'>Year</th>
+                                    </tr>
+                                </thead>
+                                <tbody>";
+        $tableInner = '';
+        $tableInner .= "<tr><th class='scope-row'>" . $movie[0]['ID'] . "</th>
+                                    <td>" . $movie[0]['Title'] . "</td>
+                                    <td>" . $movie[0]['Year'] . "</td>
+                                </tr>";
+        $tableBottom = "</tbody></table>";
+
+        return $tableTop . $tableInner . $tableBottom;
     }
 }

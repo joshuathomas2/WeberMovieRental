@@ -11,5 +11,6 @@ session_unset();
 
 echo $GEN->generateHeader();
 echo $GEN->generateInnerContent('returnToLoginButton');
+echo $GEN->generateInnerContent('messageLogoutSuccess');
 echo $GEN->generateFooter();
 
