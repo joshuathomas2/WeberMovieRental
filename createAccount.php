@@ -8,7 +8,7 @@ $DF = new DatabaseFunctions();
 $GEN = new HTMLGenerator();
 $email = $_POST['email'] ?? '';
 $username = $_POST['username'] ?? '';
-$password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT) ?? '';
+$password_hash = password_hash($_POST['password'] ?? '', PASSWORD_DEFAULT);
 
 // Check if the User Exists, if it does, return an error message, if it does not, process the input and create the account
 if ($DF->checkIfUserExists($username)) {
