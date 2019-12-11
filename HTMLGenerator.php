@@ -76,6 +76,77 @@ class HTMLGenerator
 			</form>';
         }
 
+        if ($contentType == 'returnToMoviesButton') {
+            return '<form action="login.php">
+				<button class="btn btn-link d-inline pl-5" type="submit">Return to Movies</button>
+			</form>';
+        }
+
+        if ($contentType == 'listAllMovies') {
+            $DF = new DatabaseFunctions();
+            $movies = $DF->getMovies();
+            $number_of_movies = sizeof($movies);
+
+            $tableTop = "<table class='table'>
+                                <thead>
+                                    <tr>
+                                        <th class='scope-col'>ID</th>
+                                        <th class='scope-col'>Movie Title</th>
+                                        <th class='scope-col'>Year</th>
+                                        <th class='scope-col'>Rent</th>
+                                    </tr>
+                                </thead>
+                                <tbody>";
+
+            $tableInner = "";
+            $tableBottom = "</tbody></table>";
+
+            for ($i = 0; $i < $number_of_movies - 1; $i++) {
+
+                $movie_id = $movies[$i]['ID'];
+                if ($movies[$i]['Is_Rented'] == 0) {
+                    $rentedButton = '<form class="ml-5" action="rent.php" method="post">
+                        <div class="form-group">
+        
+                            <input class="form-control w-25" type="hidden" id="movieID" name="movieID" value=' . $movie_id . '>
+                        </div>
+                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary">Rent This Movie</button>
+                                        </div>
+                    </form>';
+                } else {
+                    $rentedButton = '
+                        <div class="form-group">
+                                            <button type="submit" class="btn btn-warning ml-5" disabled>Unavailable</button>
+                                        </div>';
+                }
+
+
+
+
+                $tableInner .= "<tr><th class='scope-row'>" . $movies[$i]['ID'] . "</th>
+                                    <td>" . $movies[$i]['Title'] . "</td>
+                                    <td>" . $movies[$i]['Year'] . "</td>
+                                    <td>" . $rentedButton . "</td>
+                                </tr>";
+
+            }
+
+            return $tableTop . $tableInner . $tableBottom;
+
+        }
+
+        if ($contentType == 'listUserMovies') {
+
+        }
+
+
+
+
+
+
+
+
         return '';
     }
 

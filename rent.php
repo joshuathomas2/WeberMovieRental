@@ -3,13 +3,14 @@
 require 'DatabaseFunctions.php';
 require 'HTMLGenerator.php';
 
+session_start();
+
 $DF = new DatabaseFunctions();
 $GEN = new HTMLGenerator();
 
-session_start();
-session_unset();
-
 echo $GEN->generateHeader();
-echo $GEN->generateInnerContent('returnToLoginButton');
+echo $GEN->generateInnerContent('returnToMoviesButton');
 echo $GEN->generateFooter();
-
+echo $_SESSION['username'];
+echo '<br>';
+echo $_POST['movieID'];
