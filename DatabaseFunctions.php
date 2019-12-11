@@ -62,6 +62,40 @@ class DatabaseFunctions {
             return false;
         }
     }
+
+    function getMovies() {
+        try {
+            $dbh = new PDO("mysql:host=icarus.cs.weber.edu;dbname=W01236296", 'W01236296','Joshuacs!');
+            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo 'CONNECTION FAILURE: ' . $e->getMessage();
+            die();
+        }
+
+        $statement = $dbh->prepare('SELECT * FROM `WMR_Movie`');
+        $statement->setFetchMode(PDO::FETCH_ASSOC);
+        $statement->execute();
+        $movies = $statement->fetchAll();
+        return $movies;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 
