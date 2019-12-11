@@ -4,7 +4,7 @@
 class HTMLGenerator
 {
     function generateHeader() {
-        echo '<!DOCTYPE html>
+        return '<!DOCTYPE html>
                 <html lang="en-US">
                 <head>
                     <title>Weber Rental Service</title>
@@ -26,16 +26,24 @@ class HTMLGenerator
                 </div>';
     }
 
-    function generateInnerContent($contentType) {
+    function generateInnerContent($contentType, $username = '') {
+        if ($contentType == 'messageAccountCreated') {
+            return '<p class="lead ml-5">Thank you ' . $username . ' for signing up! You can now sign in with your username and password.</p>';
+        }
 
+        if ($contentType == 'messageAccountFailed') {
+            return '<p class="lead ml-5">The username ' . $username . ' has already been taken.</p>';
+        }
+
+        if ($contentType == 'returnButton') {
+            return '<form action="index.html">
+				<button class="btn btn-primary ml-5" type="submit">Return to Login</button>
+			</form>';
+        }
     }
 
     function generateFooter() {
-        echo '	</body>
+        return '	</body>
                 </html>';
-    }
-
-    function generateError() {
-
     }
 }
